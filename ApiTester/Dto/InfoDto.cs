@@ -1,10 +1,10 @@
-﻿//using ApiTester.Models;
+﻿using ApiTester.Models;
 
-//namespace ApiTester.Dto
-//{
-//    public class InfoDto
-//    {
-//        public List<Info> Education { get; set; } = new List<Info>();
-//        public List<Skills> Experience { get; set; } = new List<Skills>();
-//    }
-//}
+namespace ApiTester.Dto
+{
+    public class InfoDto
+    {
+        public List<Info> Info { get; set; } = new List<Info>();
+        public List<Skills> Skills { get; set; } = new List<Skills>();
+    }
+}

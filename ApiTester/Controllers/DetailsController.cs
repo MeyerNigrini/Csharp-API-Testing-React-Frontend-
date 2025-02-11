@@ -17,36 +17,24 @@ namespace ApiTester.Controllers
             _context = context;
         }
 
-        private string _filePath = "";
 
         [HttpGet("info")]
-        public IActionResult GetDetails()
+        public async Task<ActionResult<List<InfoDto>>> GetInfoData()
         {
-            _filePath = "Data/infoData.json";
-            try
+            var infoData = await _context.Info.ToListAsync();
+            var skillsData = await _context.Skills.ToListAsync();
+
+            // Create a structured response
+            var response = new InfoDto
             {
-                if (!System.IO.File.Exists(_filePath))
-                {
-                    return NotFound("Data file not found.");
-                }
+                Info = infoData,
+                Skills = skillsData
+            };
 
-                // Read JSON contents
-                string jsonData = System.IO.File.ReadAllText(_filePath);
-
-                var info = JsonSerializer.Deserialize<InfoModel>(jsonData,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-                return Ok(info);
-            }
-            catch (Exception ex)
-            {
-                // StatusCode(500, ...) is a helper method that returns a status code 500 (Internal Server Error)
-                // 500 status code means something unexpected went wrong on the server/
-                return StatusCode(500, $"Error reading JSON file: {ex.Message}");
-            }
+            return Ok(response);
         }
 
-        
+
 
         [HttpGet("accordion")]
         public async Task<ActionResult<List<AccordionDto>>> GetAccordionData()

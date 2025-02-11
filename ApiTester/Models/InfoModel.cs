@@ -2,9 +2,6 @@
 
 namespace ApiTester.Models
 {
-    public class InfoModel
-    {
-        public List<KeyValuePairModel> Info { get; set; }
-        public List<KeyValuePairModel> Skills { get; set; }
-    }
+    public class Info : KeyValuePairModel { }
+    public class Skills : KeyValuePairModel { }
 }
