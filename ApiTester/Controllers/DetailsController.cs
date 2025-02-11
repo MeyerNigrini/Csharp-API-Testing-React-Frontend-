@@ -1,19 +1,28 @@
 ﻿using ApiTester.Models;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using ApiTester.Dto;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiTester.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DetailsController : Controller
+    public class DetailsController : ControllerBase
     {
+        private readonly AppDbContext _context;
 
-        private readonly string _filePath = "Data/details.json";
+        public DetailsController(AppDbContext context)
+        {
+            _context = context;
+        }
 
-        [HttpGet]
+        private string _filePath = "";
+
+        [HttpGet("info")]
         public IActionResult GetDetails()
         {
+            _filePath = "Data/infoData.json";
             try
             {
                 if (!System.IO.File.Exists(_filePath))
@@ -24,10 +33,10 @@ namespace ApiTester.Controllers
                 // Read JSON contents
                 string jsonData = System.IO.File.ReadAllText(_filePath);
 
-                var details = JsonSerializer.Deserialize<DetailsModel>(jsonData,
+                var info = JsonSerializer.Deserialize<InfoModel>(jsonData,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                return Ok(details);
+                return Ok(info);
             }
             catch (Exception ex)
             {
@@ -35,6 +44,25 @@ namespace ApiTester.Controllers
                 // 500 status code means something unexpected went wrong on the server/
                 return StatusCode(500, $"Error reading JSON file: {ex.Message}");
             }
+        }
+
+        
+
+        [HttpGet("accordion")]
+        public async Task<ActionResult<List<AccordionDto>>> GetAccordionData()
+        {
+            // Fetch Education and Experience data
+            var educationData = await _context.Education.ToListAsync();
+            var experienceData = await _context.Experience.ToListAsync();
+
+            // Create a structured response
+            var response = new AccordionDto
+            {
+                Education = educationData,
+                Experience = experienceData
+            };
+
+            return Ok(response);
         }
     }
 }

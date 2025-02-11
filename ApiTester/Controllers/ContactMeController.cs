@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ApiTester.Models;
 using System.Text.Json;
+using ApiTester.Models;
 
 namespace ApiTester.Controllers
 {
