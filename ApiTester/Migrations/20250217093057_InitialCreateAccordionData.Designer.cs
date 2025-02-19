@@ -3,6 +3,7 @@ using ApiTester.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiTester.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250217093057_InitialCreateAccordionData")]
+    partial class InitialCreateAccordionData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,53 +79,6 @@ namespace ApiTester.Migrations
                     b.ToTable("ContactMe", (string)null);
                 });
 
-            modelBuilder.Entity("ApiTester.Models.HobbiesDetailModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("HobbyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HobbyId");
-
-                    b.ToTable("HobbiesDetails", (string)null);
-                });
-
-            modelBuilder.Entity("ApiTester.Models.HobbiesModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Paragraph")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Hobbies", (string)null);
-                });
-
             modelBuilder.Entity("ApiTester.Models.InfoModel", b =>
                 {
                     b.Property<int>("Id")
@@ -146,22 +102,6 @@ namespace ApiTester.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TableData", (string)null);
-                });
-
-            modelBuilder.Entity("ApiTester.Models.HobbiesDetailModel", b =>
-                {
-                    b.HasOne("ApiTester.Models.HobbiesModel", "Hobby")
-                        .WithMany("Details")
-                        .HasForeignKey("HobbyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hobby");
-                });
-
-            modelBuilder.Entity("ApiTester.Models.HobbiesModel", b =>
-                {
-                    b.Navigation("Details");
                 });
 #pragma warning restore 612, 618
         }

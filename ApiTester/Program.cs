@@ -1,4 +1,8 @@
-using ApiTester.Models;
+using ApiTester.Application.Services;
+using ApiTester.Domain.Interfaces.IRepositories;
+using ApiTester.Domain.Interfaces.IServices;
+using ApiTester.Infrastructure.Data;
+using ApiTester.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,23 +17,34 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
 
+// Register repositories and services with DI
+builder.Services.AddScoped<IContactMeRepository, ContactMeRepository>();
+builder.Services.AddScoped<IContactMeService, ContactMeService>();
 
+builder.Services.AddScoped<IInfoRepository, InfoRepository>();
+builder.Services.AddScoped<IInfoService, InfoService>();
+
+builder.Services.AddScoped<IAccordionRepository, AccordionRepository>();
+builder.Services.AddScoped<IAccordionService, AccordionService>();
+
+builder.Services.AddScoped<IHobbiesRepository, HobbiesRepository>();
+builder.Services.AddScoped<IHobbiesService, HobbiesService>();
+
+// Register controllers
 builder.Services.AddControllers();
 
-
-// Add CORS policy so React can communicate with backend
+// Configure CORS for React frontend
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")  // Your React app URL
+        policy.WithOrigins("http://localhost:3000")  // React app URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configure Swagger/OpenAPI for API documentation
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -38,7 +53,7 @@ var app = builder.Build();
 // Enable CORS middleware
 app.UseCors("AllowReactApp");
 
-// Configure the HTTP request pipeline.
+// Configure HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
