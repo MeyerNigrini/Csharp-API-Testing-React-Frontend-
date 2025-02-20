@@ -1,11 +1,8 @@
 ﻿// Application Layer - ContactMeService.cs
-using ApiTester.Application.DTOs;
+using ApiTester.Application.Interfaces.IServices;
+using ApiTester.Application.Models;
 using ApiTester.Domain.Interfaces.IRepositories;
-using ApiTester.Domain.Interfaces.IServices;
-using ApiTester.Domain.Models;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
+using ApiTester.Domain.Entities;
 
 namespace ApiTester.Application.Services
 {

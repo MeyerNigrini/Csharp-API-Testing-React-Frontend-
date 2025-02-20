@@ -1,4 +1,4 @@
-﻿namespace ApiTester.Application.DTOs
+﻿namespace ApiTester.Application.Models
 {
     public class ContactMeModel
     {

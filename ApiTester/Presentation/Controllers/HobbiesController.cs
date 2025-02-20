@@ -1,10 +1,8 @@
 ﻿// Presentation Layer - HobbiesController.cs
 
 using Microsoft.AspNetCore.Mvc;
-using ApiTester.Application.DTOs;
-using ApiTester.Domain.Interfaces.IServices;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+using ApiTester.Application.Interfaces.IServices;
+
 
 namespace ApiTester.Presentation.Controllers
 {

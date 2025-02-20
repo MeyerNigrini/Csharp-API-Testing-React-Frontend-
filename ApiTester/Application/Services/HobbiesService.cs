@@ -1,14 +1,9 @@
 ﻿// Application Layer - HobbiesService.cs
-using ApiTester.Application.DTOs;
+using ApiTester.Application.Models;
 using ApiTester.Application.Helpers;
 using ApiTester.Domain.Interfaces.IRepositories;
-using ApiTester.Domain.Interfaces.IServices;
-using ApiTester.Domain.Models;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ApiTester.Application.Interfaces.IServices;
+
 
 namespace ApiTester.Application.Services
 {

@@ -1,7 +1,7 @@
 ﻿using ApiTester.Domain.Interfaces.IRepositories;
-using ApiTester.Domain.Models;
+using ApiTester.Domain.Entities;
 using ApiTester.Infrastructure.Data;
-using System.Threading.Tasks;
+
 
 namespace ApiTester.Infrastructure.Repositories
 {

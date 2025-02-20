@@ -1,7 +1,7 @@
 ﻿// Infrastructure Layer - InfoRepository.cs
 
 using ApiTester.Domain.Interfaces.IRepositories;
-using ApiTester.Domain.Models;
+using ApiTester.Domain.Entities;
 using ApiTester.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

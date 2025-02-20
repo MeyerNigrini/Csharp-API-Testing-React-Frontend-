@@ -1,6 +1,4 @@
-﻿using ApiTester.Domain.Models;
-
-namespace ApiTester.Application.DTOs
+﻿namespace ApiTester.Application.Models
 {
     public class SectionAccordionModel
     {

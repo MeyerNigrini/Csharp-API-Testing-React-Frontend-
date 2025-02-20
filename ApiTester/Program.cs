@@ -1,7 +1,7 @@
 using System.Text;
+using ApiTester.Application.Interfaces.IServices;
 using ApiTester.Application.Services;
 using ApiTester.Domain.Interfaces.IRepositories;
-using ApiTester.Domain.Interfaces.IServices;
 using ApiTester.Infrastructure.Data;
 using ApiTester.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

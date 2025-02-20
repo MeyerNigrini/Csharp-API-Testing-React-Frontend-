@@ -1,6 +1,6 @@
-﻿using ApiTester.Domain.Models;
+﻿using ApiTester.Domain.Entities;
 
-namespace ApiTester.Application.DTOs
+namespace ApiTester.Application.Models
 {
     public class InfoModel
     {

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-
-namespace ApiTester.Domain.Models
+﻿namespace ApiTester.Domain.Entities
 {
     public class KeyValuePairModel
     {

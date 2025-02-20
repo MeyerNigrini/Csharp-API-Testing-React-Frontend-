@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApiTester.Domain.Models
+namespace ApiTester.Domain.Entities
 {
     public class HobbiesEntity
     {

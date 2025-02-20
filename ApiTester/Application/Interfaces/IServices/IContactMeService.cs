@@ -1,6 +1,6 @@
-﻿using ApiTester.Application.DTOs;
+﻿using ApiTester.Application.Models;
 
-namespace ApiTester.Domain.Interfaces.IServices
+namespace ApiTester.Application.Interfaces.IServices
 {
     // IContactMeService defines the contract for the service layer, which contains business logic
     // The service layer coordinates the interaction between the controller and the repository layers.

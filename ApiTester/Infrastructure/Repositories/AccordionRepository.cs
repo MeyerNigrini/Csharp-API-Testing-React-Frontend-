@@ -1,12 +1,10 @@
 ﻿// Infrastructure Layer - AccordionRepository.cs
 
 using ApiTester.Domain.Interfaces.IRepositories;
-using ApiTester.Domain.Models;
+using ApiTester.Domain.Entities;
 using ApiTester.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
 
 namespace ApiTester.Infrastructure.Repositories
 {

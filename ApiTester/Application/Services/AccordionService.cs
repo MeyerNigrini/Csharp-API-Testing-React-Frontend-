@@ -1,12 +1,8 @@
 ﻿// Application Layer - AccordionService.cs
-using ApiTester.Application.DTOs;
+using ApiTester.Application.Models;
 using ApiTester.Application.Helpers;
 using ApiTester.Domain.Interfaces.IRepositories;
-using ApiTester.Domain.Interfaces.IServices;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ApiTester.Application.Interfaces.IServices;
 
 namespace ApiTester.Application.Services
 {

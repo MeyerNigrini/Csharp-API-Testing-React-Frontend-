@@ -1,4 +1,4 @@
-﻿namespace ApiTester.Domain.Models
+﻿namespace ApiTester.Domain.Entities
 {
     public class ContactMeEntity
     {

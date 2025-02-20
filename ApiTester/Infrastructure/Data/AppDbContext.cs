@@ -1,6 +1,6 @@
-﻿using ApiTester.Domain.Models;
+﻿using ApiTester.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace ApiTester.Infrastructure.Data
 {

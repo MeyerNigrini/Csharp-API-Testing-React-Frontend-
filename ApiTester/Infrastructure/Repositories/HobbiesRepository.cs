@@ -1,6 +1,6 @@
 ﻿// Infrastructure Layer - HobbiesRepository.cs
 
-using ApiTester.Domain.Models;
+using ApiTester.Domain.Entities;
 using ApiTester.Domain.Interfaces.IRepositories;
 using ApiTester.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

@@ -1,7 +1,7 @@
-﻿using ApiTester.Application.DTOs;
+﻿using ApiTester.Application.Models;
 
 
-namespace ApiTester.Domain.Interfaces.IServices
+namespace ApiTester.Application.Interfaces.IServices
 {
     public interface IHobbiesService
     {

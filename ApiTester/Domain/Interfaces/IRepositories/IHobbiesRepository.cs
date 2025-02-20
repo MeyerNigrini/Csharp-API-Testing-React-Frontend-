@@ -1,4 +1,4 @@
-﻿using ApiTester.Domain.Models;
+﻿using ApiTester.Domain.Entities;
 
 
 namespace ApiTester.Domain.Interfaces.IRepositories

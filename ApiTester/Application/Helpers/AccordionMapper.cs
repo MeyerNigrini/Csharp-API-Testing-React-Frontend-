@@ -1,5 +1,5 @@
-﻿using ApiTester.Application.DTOs;
-using ApiTester.Domain.Models;
+﻿using ApiTester.Application.Models;
+using ApiTester.Domain.Entities;
 
 namespace ApiTester.Application.Helpers
 {

@@ -1,5 +1,5 @@
-﻿using ApiTester.Application.DTOs;
-using ApiTester.Domain.Models;
+﻿using ApiTester.Application.Models;
+using ApiTester.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -95,6 +95,7 @@ namespace ApiTester.Infrastructure.Data
                 }
             );
 
+            // Seed Hobbies Details 
             modelBuilder.Entity<HobbiesDetailEntity>().HasData(
                 new HobbiesDetailEntity
                 {

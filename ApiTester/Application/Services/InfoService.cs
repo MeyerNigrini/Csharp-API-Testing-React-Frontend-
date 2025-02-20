@@ -1,12 +1,9 @@
 ﻿// Application Layer - InfoService.cs
 
-using ApiTester.Application.DTOs;
+using ApiTester.Application.Interfaces.IServices;
+using ApiTester.Application.Models;
 using ApiTester.Domain.Interfaces.IRepositories;
-using ApiTester.Domain.Interfaces.IServices;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace ApiTester.Application.Services
 {

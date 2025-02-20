@@ -1,11 +1,7 @@
 ﻿// Presentation Layer - DetailsController.cs
-
-using ApiTester.Application.DTOs;
-using ApiTester.Domain.Interfaces.IServices;
+using ApiTester.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+
 
 namespace ApiTester.Presentation.Controllers
 {
