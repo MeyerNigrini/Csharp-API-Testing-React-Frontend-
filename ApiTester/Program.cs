@@ -1,9 +1,12 @@
+using System.Text;
 using ApiTester.Application.Services;
 using ApiTester.Domain.Interfaces.IRepositories;
 using ApiTester.Domain.Interfaces.IServices;
 using ApiTester.Infrastructure.Data;
 using ApiTester.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,10 @@ if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddUserSecrets<Program>();
 }
+
+
+// Add JWT token service
+builder.Services.AddSingleton<JwtTokenService>();
 
 // Add database connection
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -32,6 +39,23 @@ builder.Services.AddScoped<IHobbiesService, HobbiesService>();
 
 // Register controllers
 builder.Services.AddControllers();
+
+// Add JWT authentication to the service
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"])),
+           // ClockSkew = TimeSpan.Zero, // Optional: to remove clock skew tolerance
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"]
+        };
+    });
 
 // Configure CORS for React frontend
 builder.Services.AddCors(options =>
@@ -62,6 +86,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+// Use Authentication for JWT
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
