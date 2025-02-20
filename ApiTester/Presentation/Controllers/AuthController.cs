@@ -1,5 +1,6 @@
 ﻿using ApiTester.Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using ApiTester.Infrastructure.Helpers;
 
 namespace ApiTester.Presentation.Controllers
 {

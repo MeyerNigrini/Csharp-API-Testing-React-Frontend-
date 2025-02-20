@@ -21,6 +21,7 @@ namespace ApiTester.Infrastructure.Data
         public DbSet<ContactMeEntity> ContactMe { get; set; } // Table for contact details.
         public DbSet<HobbiesEntity> Hobbies { get; set; } // Table for storing hobbies.
         public DbSet<HobbiesDetailEntity> HobbiesDetails { get; set; } // Table for storing details of hobbies.
+        public DbSet<UserEntity> Users { get; set; } // Table for storing user data.
 
         /// <summary>
         /// Configures the model relationships and table mappings.
@@ -30,33 +31,44 @@ namespace ApiTester.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Mapping entities to their respective database tables.
-
-            // Accordion Data Table Mapping
+            // Table Mappings
             modelBuilder.Entity<AccordionEntity>().ToTable("AccordionData");
-
-            // Info Data Table Mapping
             modelBuilder.Entity<InfoEntity>().ToTable("TableData");
-
-            // Contact Me Table Mapping
             modelBuilder.Entity<ContactMeEntity>().ToTable("ContactMe");
+            modelBuilder.Entity<UserEntity>().ToTable("Users");
+            modelBuilder.Entity<HobbiesEntity>().ToTable("Hobbies");
+            modelBuilder.Entity<HobbiesDetailEntity>().ToTable("HobbiesDetails");
 
-            // Hobbies Table Mapping with Primary Key
+            // Define the foreign key relationship between AccordionEntity and UserEntity
+            modelBuilder.Entity<AccordionEntity>()
+                .HasOne(a => a.User) // Navigation property to UserEntity
+                .WithMany(u => u.Accordions) // A User has many Accordions
+                .HasForeignKey(a => a.UserId) // Foreign key in AccordionEntity
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Define the foreign key relationship between HobbiesEntity and UserEntity
             modelBuilder.Entity<HobbiesEntity>()
-                .ToTable("Hobbies")
-                .HasKey(x => x.Id);
+                .HasOne(h => h.User) // Navigation property to UserEntity
+                .WithMany(u => u.Hobbies) // A User has many Hobbies
+                .HasForeignKey(h => h.UserId) // Foreign key in HobbiesEntity
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Hobbies Details Table Mapping with Primary Key
-            modelBuilder.Entity<HobbiesDetailEntity>()
-                .ToTable("HobbiesDetails")
-                .HasKey(d => d.Id);
+            // Define the foreign key relationship between InfoEntity and UserEntity
+            modelBuilder.Entity<InfoEntity>()
+                .HasOne(i => i.User) // Navigation property to UserEntity
+                .WithMany(u => u.Infos) // A User has many Infos
+                .HasForeignKey(i => i.UserId) // Foreign key in InfoEntity
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Define the foreign key relationship between Hobbies and HobbiesDetails.
+            // Define the foreign key relationship between HobbiesDetailEntity and HobbiesEntity
             modelBuilder.Entity<HobbiesDetailEntity>()
-                .HasOne(d => d.Hobby) // Navigation property to the parent entity (Hobby)
-                .WithMany(h => h.Details) // Reverse navigation: A Hobby has many details.
-                .HasForeignKey(d => d.HobbyId) // Foreign key in HobbiesDetailModel.
-                .OnDelete(DeleteBehavior.Cascade); // Cascade delete: When a hobby is deleted, its details are also removed.
+                .HasOne(d => d.Hobby) // Navigation property to HobbiesEntity
+                .WithMany(h => h.Details) // A Hobby has many Details
+                .HasForeignKey(d => d.HobbyId) // Foreign key in HobbiesDetailEntity
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Call the SeedData class
+            SeedData.Seed(modelBuilder);
         }
     }
 }
