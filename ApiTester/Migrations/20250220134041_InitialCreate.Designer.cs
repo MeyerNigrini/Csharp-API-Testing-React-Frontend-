@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiTester.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250220133348_CreateUserEntityAndDefineUserEntityRelationshipsBetweenOtherEntities")]
-    partial class CreateUserEntityAndDefineUserEntityRelationshipsBetweenOtherEntities
+    [Migration("20250220134041_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

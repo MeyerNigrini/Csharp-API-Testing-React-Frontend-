@@ -1,5 +1,6 @@
 ﻿// Application Layer - HobbiesService.cs
 using ApiTester.Application.DTOs;
+using ApiTester.Application.Helpers;
 using ApiTester.Domain.Interfaces.IRepositories;
 using ApiTester.Domain.Interfaces.IServices;
 using ApiTester.Domain.Models;
@@ -65,7 +66,7 @@ namespace ApiTester.Application.Services
                 }
 
                 // Step 3: Map the raw data to a structured DTO
-                return MapToHobbiesDto(hobbies);
+                return HobbiesMapper.MapToHobbiesModel(hobbies);
             }
             catch (Exception ex)
             {
@@ -75,53 +76,6 @@ namespace ApiTester.Application.Services
                 // Step 5: Re-throw the exception to be handled by the controller
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Maps a list of <see cref="HobbiesEntity"/> objects to a <see cref="HobbiesModel"/> object.
-        /// </summary>
-        /// <param name="hobbies">The list of hobbies data to be mapped.</param>
-        /// <returns>A structured <see cref="HobbiesModel"/> object.</returns>
-        private static HobbiesModel MapToHobbiesDto(List<HobbiesEntity> hobbies)
-        {
-            return new HobbiesModel
-            {
-                // Map the "Karate" section
-                Karate = CreateSection(hobbies, "Karate"),
-
-                // Map the "Gaming" section
-                Gaming = CreateSection(hobbies, "Gaming")
-            };
-        }
-
-        /// <summary>
-        /// Creates a <see cref="SectionDto"/> object for a specific hobby section.
-        /// </summary>
-        /// <param name="hobbies">The list of hobbies data to search for the section.</param>
-        /// <param name="title">The title of the section to create (e.g., "Karate", "Gaming").</param>
-        /// <returns>
-        /// A <see cref="SectionDto"/> object if the section is found; otherwise, <c>null</c>.
-        /// </returns>
-        private static SectionModel? CreateSection(List<HobbiesEntity> hobbies, string title)
-        {
-            // Step 1: Find the hobby data for the specified title
-            var hobby = hobbies.Find(h => h.Title == title);
-
-            // Step 2: If no data is found, return null
-            if (hobby == null)
-            {
-                return null;
-            }
-
-            // Step 3: Create and return a SectionDto object
-            return new SectionModel
-            {
-                Title = title, // Set the section title
-                Paragraph = hobby.Paragraph, // Set the section paragraph
-                Details = hobby.Details?
-                    .Select(d => new KeyValuePairModel { Key = d.Key, Value = d.Value }) // Map details to KeyValuePairModel
-                    .ToList() ?? new List<KeyValuePairModel>() // Ensure the details list is never null
-            };
         }
     }
 }

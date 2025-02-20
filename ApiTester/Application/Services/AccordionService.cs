@@ -1,5 +1,6 @@
 ﻿// Application Layer - AccordionService.cs
 using ApiTester.Application.DTOs;
+using ApiTester.Application.Helpers;
 using ApiTester.Domain.Interfaces.IRepositories;
 using ApiTester.Domain.Interfaces.IServices;
 using Microsoft.Extensions.Logging;
@@ -65,15 +66,8 @@ namespace ApiTester.Application.Services
                 // Step 3: Structure the data into the DTO format
                 return new AccordionModel
                 {
-                    // Filter and map data for the "Education" section
-                    Education = data
-                        .Where(d => d.Type == "Education") // Filter by type
-                        .ToList(), // Convert to a list
-
-                    // Filter and map data for the "Experience" section
-                    Experience = data
-                        .Where(d => d.Type == "Experience") // Filter by type
-                        .ToList() // Convert to a list
+                    Education = AccordionMapper.MapToSectionAccordionModel(data.Where(d => d.Type == "Education")),
+                    Experience = AccordionMapper.MapToSectionAccordionModel(data.Where(d => d.Type == "Experience"))
                 };
             }
             catch (Exception ex)
@@ -85,5 +79,6 @@ namespace ApiTester.Application.Services
                 throw; // Re-throw for controller handling
             }
         }
+
     }
 }

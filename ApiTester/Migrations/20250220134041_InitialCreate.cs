@@ -7,31 +7,25 @@
 namespace ApiTester.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateUserEntityAndDefineUserEntityRelationshipsBetweenOtherEntities : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "UserId",
-                table: "TableData",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<int>(
-                name: "UserId",
-                table: "Hobbies",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<int>(
-                name: "UserId",
-                table: "AccordionData",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.CreateTable(
+                name: "ContactMe",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContactMe", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Users",
@@ -45,6 +39,93 @@ namespace ApiTester.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AccordionData",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccordionData", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AccordionData_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hobbies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Paragraph = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hobbies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Hobbies_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TableData",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TableData", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TableData_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HobbiesDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HobbyId = table.Column<int>(type: "int", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HobbiesDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HobbiesDetails_Hobbies_HobbyId",
+                        column: x => x.HobbyId,
+                        principalTable: "Hobbies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -112,8 +193,8 @@ namespace ApiTester.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_TableData_UserId",
-                table: "TableData",
+                name: "IX_AccordionData_UserId",
+                table: "AccordionData",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -122,231 +203,36 @@ namespace ApiTester.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccordionData_UserId",
-                table: "AccordionData",
-                column: "UserId");
+                name: "IX_HobbiesDetails_HobbyId",
+                table: "HobbiesDetails",
+                column: "HobbyId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_AccordionData_Users_UserId",
-                table: "AccordionData",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Hobbies_Users_UserId",
-                table: "Hobbies",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_TableData_Users_UserId",
+            migrationBuilder.CreateIndex(
+                name: "IX_TableData_UserId",
                 table: "TableData",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "UserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_AccordionData_Users_UserId",
-                table: "AccordionData");
+            migrationBuilder.DropTable(
+                name: "AccordionData");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Hobbies_Users_UserId",
-                table: "Hobbies");
+            migrationBuilder.DropTable(
+                name: "ContactMe");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_TableData_Users_UserId",
-                table: "TableData");
+            migrationBuilder.DropTable(
+                name: "HobbiesDetails");
+
+            migrationBuilder.DropTable(
+                name: "TableData");
+
+            migrationBuilder.DropTable(
+                name: "Hobbies");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropIndex(
-                name: "IX_TableData_UserId",
-                table: "TableData");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Hobbies_UserId",
-                table: "Hobbies");
-
-            migrationBuilder.DropIndex(
-                name: "IX_AccordionData_UserId",
-                table: "AccordionData");
-
-            migrationBuilder.DeleteData(
-                table: "AccordionData",
-                keyColumn: "Id",
-                keyValue: "eduvos");
-
-            migrationBuilder.DeleteData(
-                table: "AccordionData",
-                keyColumn: "Id",
-                keyValue: "highschool");
-
-            migrationBuilder.DeleteData(
-                table: "AccordionData",
-                keyColumn: "Id",
-                keyValue: "nebula");
-
-            migrationBuilder.DeleteData(
-                table: "AccordionData",
-                keyColumn: "Id",
-                keyValue: "oceanbasket");
-
-            migrationBuilder.DeleteData(
-                table: "AccordionData",
-                keyColumn: "Id",
-                keyValue: "rocomamas");
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 3);
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 4);
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 5);
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 6);
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 7);
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 8);
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 9);
-
-            migrationBuilder.DeleteData(
-                table: "HobbiesDetails",
-                keyColumn: "Id",
-                keyValue: 10);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 3);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 4);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 5);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 6);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 7);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 8);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 9);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 10);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 11);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 12);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 13);
-
-            migrationBuilder.DeleteData(
-                table: "TableData",
-                keyColumn: "Id",
-                keyValue: 14);
-
-            migrationBuilder.DeleteData(
-                table: "Hobbies",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Hobbies",
-                keyColumn: "Id",
-                keyValue: 2);
-
-            migrationBuilder.DropColumn(
-                name: "UserId",
-                table: "TableData");
-
-            migrationBuilder.DropColumn(
-                name: "UserId",
-                table: "Hobbies");
-
-            migrationBuilder.DropColumn(
-                name: "UserId",
-                table: "AccordionData");
         }
     }
 }

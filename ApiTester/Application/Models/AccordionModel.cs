@@ -2,10 +2,21 @@
 
 namespace ApiTester.Application.DTOs
 {
+    public class SectionAccordionModel
+    {
+        public string Id { get; set; } = "";
+        public string Image { get; set; } = "";
+        public string Label { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Content { get; set; } = "";
+        public string Type { get; set; } = "";  // New column to distinguish between Education and Experience
+
+    }
+
     public class AccordionModel
     {
-        public List<AccordionEntity> Education { get; set; } = [];
-        public List<AccordionEntity> Experience { get; set; } = [];
+        public List<SectionAccordionModel> Education { get; set; } = [];
+        public List<SectionAccordionModel> Experience { get; set; } = [];
 
         /// <summary>
         /// Checks if both Education and Experience lists are empty.

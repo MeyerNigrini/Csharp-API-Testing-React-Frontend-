@@ -41,7 +41,6 @@ namespace ApiTester.Presentation.Controllers
         /// Handles HTTP GET requests to retrieve Info data.
         /// </summary>
         /// <returns>HTTP 200 OK if data is found, HTTP 404 Not Found if no data is available, or HTTP 500 Internal Server Error on failure.</returns>
-        [Authorize]
         [HttpGet("info")]
         public async Task<IActionResult> GetInfoData()
         {
