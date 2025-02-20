@@ -43,7 +43,7 @@ namespace ApiTester.Application.Services
         /// A boolean indicating whether the contact submission was successfully created.
         /// Returns <c>false</c> if validation fails or an error occurs during the process.
         /// </returns>
-        public async Task<bool> CreateContactAsync(ContactMeDto contactDto)
+        public async Task<bool> CreateContactAsync(ContactMeModel contactDto)
         {
             try
             {
@@ -61,8 +61,8 @@ namespace ApiTester.Application.Services
                     return false;
                 }
 
-                // Step 2: Map the DTO to a domain model
-                var newContact = new ContactMeModel
+                // Step 2: Map the DTO to a domain entity
+                var newContact = new ContactMeEntity
                 {
                     Name = contactDto.Name.Trim(), // Trim whitespace from the name
                     Email = contactDto.Email.Trim(), // Trim whitespace from the email

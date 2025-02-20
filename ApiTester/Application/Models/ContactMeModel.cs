@@ -1,6 +1,6 @@
 ﻿namespace ApiTester.Application.DTOs
 {
-    public class ContactMeDto
+    public class ContactMeModel
     {
         public string Name { get; set; } = "";
         public string Email { get; set; } = "";

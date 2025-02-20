@@ -6,6 +6,6 @@ namespace ApiTester.Domain.Interfaces.IServices
     public interface IHobbiesService
     {
         // Method to fetch and structure hobbies data
-        Task<HobbiesDto> GetHobbiesAsync();
+        Task<HobbiesModel> GetHobbiesAsync();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ApiTester.Domain.Models
 {
-    public class ContactMeModel
+    public class ContactMeEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

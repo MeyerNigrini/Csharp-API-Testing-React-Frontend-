@@ -37,7 +37,7 @@ namespace ApiTester.Infrastructure.Repositories
         /// Asynchronously retrieves a list of Accordion data from the database.
         /// </summary>
         /// <returns>A list of <see cref="AccordionModel"/> objects.</returns>
-        public async Task<List<AccordionModel>> GetAccordionDataAsync()
+        public async Task<List<AccordionEntity>> GetAccordionDataAsync()
         {
             try
             {

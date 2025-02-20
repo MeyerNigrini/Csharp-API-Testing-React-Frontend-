@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiTester.Domain.Models
 {
-    public class AccordionModel
+    public class AccordionEntity
     {
         [Key]
         public string Id { get; set; } = "";

@@ -10,6 +10,6 @@ namespace ApiTester.Domain.Interfaces.IServices
         // This method is responsible for creating a new contact based on the provided data transfer object (DTO)
         // The method takes a ContactMeDto object as input, which represents the contact data to be processed
         // The method returns a Task that can be awaited. It returns a boolean indicating the success of the operation
-        Task<bool> CreateContactAsync(ContactMeDto contactDto);
+        Task<bool> CreateContactAsync(ContactMeModel contactDto);
     }
 }

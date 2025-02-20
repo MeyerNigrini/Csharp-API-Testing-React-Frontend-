@@ -16,11 +16,11 @@ namespace ApiTester.Infrastructure.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         // DbSet properties representing tables in the database.
-        public DbSet<AccordionModel> AccordionData { get; set; } // Table for storing accordion data.
-        public DbSet<InfoModel> TableData { get; set; } // Table for storing general info data.
-        public DbSet<ContactMeModel> ContactMe { get; set; } // Table for contact details.
-        public DbSet<HobbiesModel> Hobbies { get; set; } // Table for storing hobbies.
-        public DbSet<HobbiesDetailModel> HobbiesDetails { get; set; } // Table for storing details of hobbies.
+        public DbSet<AccordionEntity> AccordionData { get; set; } // Table for storing accordion data.
+        public DbSet<InfoEntity> TableData { get; set; } // Table for storing general info data.
+        public DbSet<ContactMeEntity> ContactMe { get; set; } // Table for contact details.
+        public DbSet<HobbiesEntity> Hobbies { get; set; } // Table for storing hobbies.
+        public DbSet<HobbiesDetailEntity> HobbiesDetails { get; set; } // Table for storing details of hobbies.
 
         /// <summary>
         /// Configures the model relationships and table mappings.
@@ -33,26 +33,26 @@ namespace ApiTester.Infrastructure.Data
             // Mapping entities to their respective database tables.
 
             // Accordion Data Table Mapping
-            modelBuilder.Entity<AccordionModel>().ToTable("AccordionData");
+            modelBuilder.Entity<AccordionEntity>().ToTable("AccordionData");
 
             // Info Data Table Mapping
-            modelBuilder.Entity<InfoModel>().ToTable("TableData");
+            modelBuilder.Entity<InfoEntity>().ToTable("TableData");
 
             // Contact Me Table Mapping
-            modelBuilder.Entity<ContactMeModel>().ToTable("ContactMe");
+            modelBuilder.Entity<ContactMeEntity>().ToTable("ContactMe");
 
             // Hobbies Table Mapping with Primary Key
-            modelBuilder.Entity<HobbiesModel>()
+            modelBuilder.Entity<HobbiesEntity>()
                 .ToTable("Hobbies")
                 .HasKey(x => x.Id);
 
             // Hobbies Details Table Mapping with Primary Key
-            modelBuilder.Entity<HobbiesDetailModel>()
+            modelBuilder.Entity<HobbiesDetailEntity>()
                 .ToTable("HobbiesDetails")
                 .HasKey(d => d.Id);
 
             // Define the foreign key relationship between Hobbies and HobbiesDetails.
-            modelBuilder.Entity<HobbiesDetailModel>()
+            modelBuilder.Entity<HobbiesDetailEntity>()
                 .HasOne(d => d.Hobby) // Navigation property to the parent entity (Hobby)
                 .WithMany(h => h.Details) // Reverse navigation: A Hobby has many details.
                 .HasForeignKey(d => d.HobbyId) // Foreign key in HobbiesDetailModel.

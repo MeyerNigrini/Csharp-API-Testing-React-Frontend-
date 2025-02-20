@@ -36,8 +36,8 @@ namespace ApiTester.Infrastructure.Repositories
         /// <summary>
         /// Asynchronously retrieves a list of hobbies along with their details from the database.
         /// </summary>
-        /// <returns>A list of <see cref="HobbiesModel"/> objects with related details.</returns>
-        public async Task<List<HobbiesModel>> GetHobbiesWithDetailsAsync()
+        /// <returns>A list of <see cref="HobbiesEntity"/> objects with related details.</returns>
+        public async Task<List<HobbiesEntity>> GetHobbiesWithDetailsAsync()
         {
             try
             {

@@ -39,13 +39,13 @@ namespace ApiTester.Application.Services
         /// Fetches and structures Accordion data from the database.
         /// </summary>
         /// <returns>
-        /// A <see cref="AccordionDto"/> object containing structured data for Education and Experience sections.
+        /// A <see cref="AccordionModel"/> object containing structured data for Education and Experience sections.
         /// If no data is found, an empty DTO is returned.
         /// </returns>
         /// <exception cref="Exception">
         /// Throws an exception if an error occurs while fetching or processing the data.
         /// </exception>
-        public async Task<AccordionDto> GetAccordionDataAsync()
+        public async Task<AccordionModel> GetAccordionDataAsync()
         {
             try
             {
@@ -59,11 +59,11 @@ namespace ApiTester.Application.Services
                     _logger.LogWarning("No accordion data found in repository");
 
                     // Return an empty DTO to indicate no data is available
-                    return new AccordionDto();
+                    return new AccordionModel();
                 }
 
                 // Step 3: Structure the data into the DTO format
-                return new AccordionDto
+                return new AccordionModel
                 {
                     // Filter and map data for the "Education" section
                     Education = data

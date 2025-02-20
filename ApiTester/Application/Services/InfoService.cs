@@ -35,8 +35,8 @@ namespace ApiTester.Application.Services
         /// <summary>
         /// Asynchronously retrieves information data and organizes it into categorized DTO properties.
         /// </summary>
-        /// <returns>An <see cref="InfoDto"/> object containing categorized info data.</returns>
-        public async Task<InfoDto> GetInfoDataAsync()
+        /// <returns>An <see cref="InfoModel"/> object containing categorized info data.</returns>
+        public async Task<InfoModel> GetInfoDataAsync()
         {
             try
             {
@@ -47,11 +47,11 @@ namespace ApiTester.Application.Services
                 if (infoData == null || !infoData.Any())
                 {
                     _logger.LogWarning("No info data found in repository");
-                    return new InfoDto(); // Return an empty DTO instead of throwing an exception.
+                    return new InfoModel(); // Return an empty DTO instead of throwing an exception.
                 }
 
                 // Categorize the retrieved data into different sections.
-                return new InfoDto
+                return new InfoModel
                 {
                     Info = infoData.Where(d => d.Type == "Personal Info").ToList(), // Extract personal info.
                     Skills = infoData.Where(d => d.Type == "Technical Skills").ToList() // Extract technical skills.

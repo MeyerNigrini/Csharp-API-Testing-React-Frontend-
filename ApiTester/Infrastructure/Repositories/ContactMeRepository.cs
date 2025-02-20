@@ -28,7 +28,7 @@ namespace ApiTester.Infrastructure.Repositories
         /// </summary>
         /// <param name="contact">The contact entity to be added.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public async Task AddContactAsync(ContactMeModel contact)
+        public async Task AddContactAsync(ContactMeEntity contact)
         {
             // Add the contact entity to the DbSet for tracking.
             await _context.ContactMe.AddAsync(contact);

@@ -37,7 +37,7 @@ namespace ApiTester.Presentation.Controllers
         /// <param name="contactDto">The contact data transfer object (DTO) containing user input.</param>
         /// <returns>HTTP 200 OK if successful, or HTTP 400 Bad Request if an error occurs.</returns>
         [HttpPost]
-        public async Task<IActionResult> CreateContact([FromBody] ContactMeDto contactDto)
+        public async Task<IActionResult> CreateContact([FromBody] ContactMeModel contactDto)
         {
             // Validate the incoming DTO
             if (contactDto == null)

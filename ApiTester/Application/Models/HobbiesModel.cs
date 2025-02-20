@@ -2,7 +2,7 @@
 
 namespace ApiTester.Application.DTOs
 {
-    public class SectionDto
+    public class SectionModel
     {
         public string Title { get; set; } = "";
         public List<KeyValuePairModel> Details { get; set; } = [];
@@ -16,10 +16,10 @@ namespace ApiTester.Application.DTOs
 
     }
 
-    public class HobbiesDto
+    public class HobbiesModel
     {
-        public SectionDto Karate { get; set; } = new SectionDto();
-        public SectionDto Gaming { get; set; } = new SectionDto();
+        public SectionModel Karate { get; set; } = new SectionModel();
+        public SectionModel Gaming { get; set; } = new SectionModel();
 
         // Helper method to check if the entire DTO is empty
         public bool IsEmpty() =>

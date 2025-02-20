@@ -2,10 +2,10 @@
 
 namespace ApiTester.Application.DTOs
 {
-    public class AccordionDto
+    public class AccordionModel
     {
-        public List<AccordionModel> Education { get; set; } = [];
-        public List<AccordionModel> Experience { get; set; } = [];
+        public List<AccordionEntity> Education { get; set; } = [];
+        public List<AccordionEntity> Experience { get; set; } = [];
 
         /// <summary>
         /// Checks if both Education and Experience lists are empty.

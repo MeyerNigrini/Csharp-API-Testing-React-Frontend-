@@ -41,13 +41,13 @@ namespace ApiTester.Application.Services
         /// Fetches and structures hobbies data from the database.
         /// </summary>
         /// <returns>
-        /// A <see cref="HobbiesDto"/> object containing structured data for hobbies sections (e.g., Karate, Gaming).
+        /// A <see cref="HobbiesModel"/> object containing structured data for hobbies sections (e.g., Karate, Gaming).
         /// If no data is found, an empty DTO is returned.
         /// </returns>
         /// <exception cref="Exception">
         /// Throws an exception if an error occurs while fetching or processing the data.
         /// </exception>
-        public async Task<HobbiesDto> GetHobbiesAsync()
+        public async Task<HobbiesModel> GetHobbiesAsync()
         {
             try
             {
@@ -61,7 +61,7 @@ namespace ApiTester.Application.Services
                     _logger.LogWarning("No hobbies found in repository");
 
                     // Return an empty DTO to indicate no data is available
-                    return new HobbiesDto();
+                    return new HobbiesModel();
                 }
 
                 // Step 3: Map the raw data to a structured DTO
@@ -78,13 +78,13 @@ namespace ApiTester.Application.Services
         }
 
         /// <summary>
-        /// Maps a list of <see cref="HobbiesModel"/> objects to a <see cref="HobbiesDto"/> object.
+        /// Maps a list of <see cref="HobbiesEntity"/> objects to a <see cref="HobbiesModel"/> object.
         /// </summary>
         /// <param name="hobbies">The list of hobbies data to be mapped.</param>
-        /// <returns>A structured <see cref="HobbiesDto"/> object.</returns>
-        private static HobbiesDto MapToHobbiesDto(List<HobbiesModel> hobbies)
+        /// <returns>A structured <see cref="HobbiesModel"/> object.</returns>
+        private static HobbiesModel MapToHobbiesDto(List<HobbiesEntity> hobbies)
         {
-            return new HobbiesDto
+            return new HobbiesModel
             {
                 // Map the "Karate" section
                 Karate = CreateSection(hobbies, "Karate"),
@@ -102,7 +102,7 @@ namespace ApiTester.Application.Services
         /// <returns>
         /// A <see cref="SectionDto"/> object if the section is found; otherwise, <c>null</c>.
         /// </returns>
-        private static SectionDto? CreateSection(List<HobbiesModel> hobbies, string title)
+        private static SectionModel? CreateSection(List<HobbiesEntity> hobbies, string title)
         {
             // Step 1: Find the hobby data for the specified title
             var hobby = hobbies.Find(h => h.Title == title);
@@ -114,7 +114,7 @@ namespace ApiTester.Application.Services
             }
 
             // Step 3: Create and return a SectionDto object
-            return new SectionDto
+            return new SectionModel
             {
                 Title = title, // Set the section title
                 Paragraph = hobby.Paragraph, // Set the section paragraph

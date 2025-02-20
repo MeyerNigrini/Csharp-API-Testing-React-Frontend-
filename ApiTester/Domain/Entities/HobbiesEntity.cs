@@ -2,7 +2,7 @@
 
 namespace ApiTester.Domain.Models
 {
-    public class HobbiesModel
+    public class HobbiesEntity
     {
         [Key]
         public int Id { get; set; }
@@ -10,14 +10,14 @@ namespace ApiTester.Domain.Models
         public string Title { get; set; } = "";
 
         // Navigation property for related HobbyDetails
-        public ICollection<HobbiesDetailModel> Details { get; set; } = [];
+        public ICollection<HobbiesDetailEntity> Details { get; set; } = [];
     }
 
-    public class HobbiesDetailModel : KeyValuePairModel
+    public class HobbiesDetailEntity : KeyValuePairModel
     {
         public new int Id { get; set; }
         public int HobbyId { get; set; }  // Foreign key to Hobbies table
         // Navigation property to HobbiesModel
-        public HobbiesModel Hobby { get; set; } = new();
+        public HobbiesEntity Hobby { get; set; } = new();
     }
 }

@@ -36,8 +36,8 @@ namespace ApiTester.Infrastructure.Repositories
         /// <summary>
         /// Asynchronously retrieves a list of Info data from the database.
         /// </summary>
-        /// <returns>A list of <see cref="InfoModel"/> objects.</returns>
-        public async Task<List<InfoModel>> GetInfoDataAsync()
+        /// <returns>A list of <see cref="InfoEntity"/> objects.</returns>
+        public async Task<List<InfoEntity>> GetInfoDataAsync()
         {
             try
             {

@@ -11,6 +11,6 @@ namespace ApiTester.Domain.Interfaces.IRepositories
         // It takes a ContactMeModel object as input, which represents a new contact to be saved
         // The method is asynchronous because it involves database operations (I/O-bound)
         // It returns a Task, which allows us to await its completion
-        Task AddContactAsync(ContactMeModel contact);
+        Task AddContactAsync(ContactMeEntity contact);
     }
 }
