@@ -1,9 +1,9 @@
 using System.Text;
-using ApiTester.Application.Interfaces.IServices;
-using ApiTester.Application.Services;
-using ApiTester.Domain.Interfaces.IRepositories;
-using ApiTester.Infrastructure.Data;
-using ApiTester.Infrastructure.Repositories;
+using Application.Interfaces.IServices;
+using Application.Services;
+using Domain.Interfaces.IRepositories;
+using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
