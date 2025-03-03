@@ -1,7 +1,7 @@
 ﻿// Presentation Layer - HobbiesController.cs
 
 using Microsoft.AspNetCore.Mvc;
-using Application.Interfaces.IServices;
+using Services.Interfaces.IServices;
 
 
 namespace Presentation.Controllers
@@ -10,7 +10,7 @@ namespace Presentation.Controllers
     /// API Controller for retrieving hobbies data.
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("hobbies")]
     public class HobbiesController : ControllerBase
     {
         private readonly IHobbiesService _hobbiesService; // Service to fetch hobbies data
@@ -32,7 +32,7 @@ namespace Presentation.Controllers
         /// Handles HTTP GET requests to retrieve hobbies data.
         /// </summary>
         /// <returns>HTTP 200 OK if data is found, HTTP 404 Not Found if no data is available, or HTTP 500 Internal Server Error on failure.</returns>
-        [HttpGet]
+        [HttpGet("AllHobbies")]
         public async Task<IActionResult> GetHobbies()
         {
             try

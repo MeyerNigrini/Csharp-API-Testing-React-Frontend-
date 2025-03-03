@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 
-namespace Domain.Entities
+namespace Infrastructure.Entities
 {
     public class AccordionEntity
     {

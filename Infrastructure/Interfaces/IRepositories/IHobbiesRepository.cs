@@ -1,7 +1,7 @@
-﻿using Domain.Entities;
+﻿using Infrastructure.Entities;
 
 
-namespace Domain.Interfaces.IRepositories
+namespace Infrastructure.Interfaces.IRepositories
 {
     public interface IHobbiesRepository
     {

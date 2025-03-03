@@ -1,12 +1,12 @@
 ﻿// Application Layer - HobbiesService.cs
-using Application.Models;
-using Application.Helpers;
-using Domain.Interfaces.IRepositories;
-using Application.Interfaces.IServices;
+using Services.Models;
+using Infrastructure.Interfaces.IRepositories;
+using Services.Interfaces.IServices;
 using Microsoft.Extensions.Logging;
+using Services.Mappers;
 
 
-namespace Application.Services
+namespace Services.Services
 {
     /// <summary>
     /// Service class responsible for handling business logic related to hobbies data.

@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using Infrastructure.Entities;
 
-namespace Domain.Interfaces.IRepositories
+namespace Infrastructure.Interfaces.IRepositories
 {
     // IInfoRepository defines the data access contract for Info data
     public interface IInfoRepository

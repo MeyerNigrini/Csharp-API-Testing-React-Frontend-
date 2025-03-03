@@ -1,7 +1,7 @@
 ﻿// Infrastructure Layer - HobbiesRepository.cs
 
-using Domain.Entities;
-using Domain.Interfaces.IRepositories;
+using Infrastructure.Entities;
+using Infrastructure.Interfaces.IRepositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

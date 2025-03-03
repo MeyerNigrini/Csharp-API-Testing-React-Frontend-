@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Domain.Models;
 
-namespace Domain.Entities
+namespace Infrastructure.Entities
 {
     public class HobbiesEntity
     {
@@ -19,7 +20,7 @@ namespace Domain.Entities
 
     public class HobbiesDetailEntity : KeyValuePairModel
     {
-        public new int Id { get; set; }
+        public int Id { get; set; }
         public int HobbyId { get; set; }  // Foreign key to Hobbies table
         // Navigation property to HobbiesModel
         public HobbiesEntity Hobby { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Application.Models
+﻿namespace Services.Models
 {
     public class SectionAccordionModel
     {
@@ -7,7 +7,7 @@
         public string Label { get; set; } = "";
         public string Description { get; set; } = "";
         public string Content { get; set; } = "";
-        public string Type { get; set; } = "";  // New column to distinguish between Education and Experience
+        public string Type { get; set; } = "";  // Column to distinguish between Education and Experience
 
     }
 

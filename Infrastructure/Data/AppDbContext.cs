@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -10,7 +10,7 @@ namespace Infrastructure.Data
     public class AppDbContext : DbContext
     {
         /// <summary>
-        /// Constructor for AppDbContext, accepting database context options.
+        /// Constructor for AppDbContext, accepting database context options to configure the context
         /// </summary>
         /// <param name="options">Database context options.</param>
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }

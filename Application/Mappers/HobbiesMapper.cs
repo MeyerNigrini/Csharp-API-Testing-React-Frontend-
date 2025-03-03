@@ -1,7 +1,8 @@
-﻿using Application.Models;
-using Domain.Entities;
-
-namespace Application.Helpers
+﻿using Services.Models;
+using Infrastructure.Entities;
+using Domain.Models;
+    
+namespace Services.Mappers
 {
     public static class HobbiesMapper
     {

@@ -1,7 +1,7 @@
 ﻿// Infrastructure Layer - InfoRepository.cs
 
-using Domain.Interfaces.IRepositories;
-using Domain.Entities;
+using Infrastructure.Interfaces.IRepositories;
+using Infrastructure.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

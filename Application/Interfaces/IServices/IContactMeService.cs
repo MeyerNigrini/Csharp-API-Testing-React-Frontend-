@@ -1,6 +1,6 @@
-﻿using Application.Models;
+﻿using Services.Models;
 
-namespace Application.Interfaces.IServices
+namespace Services.Interfaces.IServices
 {
     // IContactMeService defines the contract for the service layer, which contains business logic
     // The service layer coordinates the interaction between the controller and the repository layers.

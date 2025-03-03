@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using Infrastructure.Entities;
 
-namespace Domain.Interfaces.IRepositories
+namespace Infrastructure.Interfaces.IRepositories
 {
     // IContactMeRepository defines the contract for interacting with the contact data in the repository
     // This interface abstracts the operations related to the 'ContactMe' data, so the service layer

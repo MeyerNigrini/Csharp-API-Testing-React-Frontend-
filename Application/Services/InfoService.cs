@@ -1,12 +1,12 @@
 ﻿// Application Layer - InfoService.cs
 
-using Application.Interfaces.IServices;
-using Application.Models;
-using Domain.Interfaces.IRepositories;
+using Services.Interfaces.IServices;
+using Services.Models;
+using Infrastructure.Interfaces.IRepositories;
 using Microsoft.Extensions.Logging;
 
 
-namespace Application.Services
+namespace Services.Services
 {
     /// <summary>
     /// Service class responsible for handling business logic related to Info data.

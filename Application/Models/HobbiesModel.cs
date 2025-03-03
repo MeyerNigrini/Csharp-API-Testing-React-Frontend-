@@ -1,6 +1,7 @@
-﻿using Domain.Entities;
+﻿using Infrastructure.Entities;
+using Domain.Models;
 
-namespace Application.Models
+namespace Services.Models
 {
     public class SectionModel
     {
@@ -21,7 +22,7 @@ namespace Application.Models
         public SectionModel Karate { get; set; } = new SectionModel();
         public SectionModel Gaming { get; set; } = new SectionModel();
 
-        // Helper method to check if the entire DTO is empty
+        // Helper method to check if the entire Model is empty
         public bool IsEmpty() =>
             Karate.IsEmpty() && Gaming.IsEmpty();
     }

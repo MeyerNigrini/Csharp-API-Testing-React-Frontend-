@@ -1,7 +1,7 @@
-﻿using Application.Models;
+﻿using Services.Models;
 
 
-namespace Application.Interfaces.IServices
+namespace Services.Interfaces.IServices
 {
     public interface IHobbiesService
     {

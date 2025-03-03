@@ -1,8 +1,10 @@
 ﻿// ContactMeController.cs
 
 using Microsoft.AspNetCore.Mvc;
-using Application.Models;
-using Application.Interfaces.IServices;
+using Services.Models;
+using Services.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
+using Services.Exceptions;
 
 namespace Presentation.Controllers
 {
@@ -34,7 +36,7 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="contactDto">The contact data transfer object (DTO) containing user input.</param>
         /// <returns>HTTP 200 OK if successful, or HTTP 400 Bad Request if an error occurs.</returns>
-        [HttpPost]
+        [HttpPost("AddMessage")]
         public async Task<IActionResult> CreateContact([FromBody] ContactMeModel contactDto)
         {
             // Validate the incoming DTO
@@ -44,13 +46,31 @@ namespace Presentation.Controllers
                 return BadRequest("Invalid contact data."); // Return 400 Bad Request
             }
 
-            // Attempt to create a new contact entry
-            var success = await _contactMeService.CreateContactAsync(contactDto);
+            try
+            {
+                // Attempt to create the contact and check the result
+                var success = await _contactMeService.CreateContactAsync(contactDto);
 
-            // Return appropriate HTTP response based on success status
-            return success
-                ? Ok(new { message = "Contact created successfully" }) // HTTP 200 OK
-                : BadRequest("An error occurred while creating the contact."); // HTTP 400 Bad Request
+                if (success)
+                {
+                    return Ok(new { message = "Contact created successfully" });
+                }
+                else
+                {
+                    return BadRequest("An error occurred while creating the contact.");
+                }
+            }
+            catch (ContactValidationException ex)
+            {
+                // Return the validation error message from the exception
+                return BadRequest(ex.Message);  // Sends the validation error message to the client
+            }
+            catch (Exception ex)
+            {
+                // Log and return a generic error message if an unexpected error occurs
+                _logger.LogError(ex, "An unexpected error occurred.");
+                return BadRequest("An unexpected error occurred.");
+            }
         }
     }
 }

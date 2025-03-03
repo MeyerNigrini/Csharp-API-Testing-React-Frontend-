@@ -1,12 +1,18 @@
 using System.Text;
-using Application.Interfaces.IServices;
-using Application.Services;
-using Domain.Interfaces.IRepositories;
+using Services.Interfaces.IServices;
+using Services.Services;
+using Infrastructure.Interfaces.IRepositories;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+
+// Insert this at the very top to ensure a dummy --parentprocessid is present.
+if (args == null || args.Length == 0 || !args.Any(arg => arg.StartsWith("--parentprocessid")))
+{
+    args = new string[] { "--parentprocessid=0" };
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,7 +90,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Integration Testing does not require HTTPS redirection
+if (!app.Environment.IsEnvironment("IntegrationTesting"))
+{
+    app.UseHttpsRedirection();
+}
 
 
 // Use Authentication for JWT
@@ -94,3 +104,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// At the very end of your Program.cs
+public partial class Program { }

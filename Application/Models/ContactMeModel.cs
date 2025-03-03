@@ -1,4 +1,4 @@
-﻿namespace Application.Models
+﻿namespace Services.Models
 {
     public class ContactMeModel
     {

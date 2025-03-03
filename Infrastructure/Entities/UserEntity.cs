@@ -1,7 +1,10 @@
-﻿namespace Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Infrastructure.Entities
 {
     public class UserEntity
     {
+        [Key]
         public int Id { get; set; }
         public string Username { get; set; }
         public string PasswordHash { get; set; } // Hashed password

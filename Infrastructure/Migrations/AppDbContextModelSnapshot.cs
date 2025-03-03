@@ -21,7 +21,7 @@ namespace ApiTester.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.AccordionEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.AccordionEntity", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -108,7 +108,7 @@ namespace ApiTester.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.ContactMeEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.ContactMeEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,7 +133,7 @@ namespace ApiTester.Migrations
                     b.ToTable("ContactMe", (string)null);
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.HobbiesDetailEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.HobbiesDetailEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -231,7 +231,7 @@ namespace ApiTester.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.HobbiesEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.HobbiesEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -273,7 +273,7 @@ namespace ApiTester.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.InfoEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.InfoEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -417,7 +417,7 @@ namespace ApiTester.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.UserEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.UserEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -446,9 +446,9 @@ namespace ApiTester.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.AccordionEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.AccordionEntity", b =>
                 {
-                    b.HasOne("ApiTester.Domain.Entities.UserEntity", "User")
+                    b.HasOne("ApiTester.Infrastructure.Entities.UserEntity", "User")
                         .WithMany("Accordions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -457,9 +457,9 @@ namespace ApiTester.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.HobbiesDetailEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.HobbiesDetailEntity", b =>
                 {
-                    b.HasOne("ApiTester.Domain.Entities.HobbiesEntity", "Hobby")
+                    b.HasOne("ApiTester.Infrastructure.Entities.HobbiesEntity", "Hobby")
                         .WithMany("Details")
                         .HasForeignKey("HobbyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -468,9 +468,9 @@ namespace ApiTester.Migrations
                     b.Navigation("Hobby");
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.HobbiesEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.HobbiesEntity", b =>
                 {
-                    b.HasOne("ApiTester.Domain.Entities.UserEntity", "User")
+                    b.HasOne("ApiTester.Infrastructure.Entities.UserEntity", "User")
                         .WithMany("Hobbies")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -479,9 +479,9 @@ namespace ApiTester.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.InfoEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.InfoEntity", b =>
                 {
-                    b.HasOne("ApiTester.Domain.Entities.UserEntity", "User")
+                    b.HasOne("ApiTester.Infrastructure.Entities.UserEntity", "User")
                         .WithMany("Infos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -490,12 +490,12 @@ namespace ApiTester.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.HobbiesEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.HobbiesEntity", b =>
                 {
                     b.Navigation("Details");
                 });
 
-            modelBuilder.Entity("ApiTester.Domain.Entities.UserEntity", b =>
+            modelBuilder.Entity("ApiTester.Infrastructure.Entities.UserEntity", b =>
                 {
                     b.Navigation("Accordions");
 

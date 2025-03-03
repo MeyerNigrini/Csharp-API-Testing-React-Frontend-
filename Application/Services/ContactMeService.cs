@@ -1,11 +1,14 @@
 ﻿// Application Layer - ContactMeService.cs
-using Application.Interfaces.IServices;
-using Application.Models;
-using Domain.Interfaces.IRepositories;
-using Domain.Entities;
+using Services.Interfaces.IServices;
+using Services.Models;
+using Infrastructure.Interfaces.IRepositories;
+using Infrastructure.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Services
+using Services.Exceptions;
+using Services.Validators;
+
+namespace Services.Services
 {
     /// <summary>
     /// Service class responsible for handling business logic related to contact submissions.
@@ -45,44 +48,33 @@ namespace Application.Services
         {
             try
             {
-                // Step 1: Validate the input data
-                if (string.IsNullOrWhiteSpace(contactDto.Name)
-                    || string.IsNullOrWhiteSpace(contactDto.Email))
-                {
-                    // Log a warning if validation fails
-                    _logger.LogWarning(
-                        "Validation failed for contact: {Name}, {Email}",
-                        contactDto.Name, contactDto.Email
-                    );
-
-                    // Return false to indicate validation failure
-                    return false;
-                }
+                // Step 1: Validate input using the ContactValidator method
+                ContactValidator.Validate(contactDto);
 
                 // Step 2: Map the DTO to a domain entity
                 var newContact = new ContactMeEntity
                 {
-                    Name = contactDto.Name.Trim(), // Trim whitespace from the name
-                    Email = contactDto.Email.Trim(), // Trim whitespace from the email
-                    Message = contactDto.Message?.Trim() ?? string.Empty // Trim whitespace from the message (if provided)
+                    Name = contactDto.Name.Trim(),
+                    Email = contactDto.Email.Trim(),
+                    Message = contactDto.Message?.Trim()
                 };
 
-                // Step 3: Use the repository to store the contact data in the database
+                // Step 3: Save the contact data in the repository
                 await _contactMeRepository.AddContactAsync(newContact);
 
-                // Step 4: Return true to indicate successful creation
                 return true;
+            }
+            catch (ContactValidationException ex)
+            {
+                // Custom Exception:
+                // Log validation errors as warnings
+                _logger.LogWarning("Validation failed: {Message}", ex.Message);
+                throw ex;  // Rethrow to be caught by the controller
             }
             catch (Exception ex)
             {
-                // Step 5: Log the error if an exception occurs
-                _logger.LogError(
-                    ex,
-                    "Failed to create contact for {Email}",
-                    contactDto.Email
-                );
-
-                // Step 6: Return false to indicate failure
+                // Log unexpected errors as errors
+                _logger.LogError(ex, "Failed to create contact for {Email}", contactDto.Email);
                 return false;
             }
         }
