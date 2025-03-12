@@ -9,6 +9,7 @@ using Infrastructure.Entities;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using FluentAssertions;
 
 namespace NUnit_Tests.UnitTests
 {
@@ -43,15 +44,18 @@ namespace NUnit_Tests.UnitTests
                 Info = new List<InfoEntity> { new InfoEntity { Id = 1, UserId = 1, Type = "About", Key = "Name", Value = "John" } },
                 Skills = new List<InfoEntity> { new InfoEntity { Id = 2, UserId = 1, Type = "Skill", Key = "C#", Value = "Expert" } }
             };
+
+            // Configures the mock _infoServiceMock to return a predefined infoModel 
+            // when the GetInfoDataAsync method is called asynchronously
             _infoServiceMock.Setup(s => s.GetInfoDataAsync()).ReturnsAsync(infoModel);
 
             // Act
             var result = await _controller.GetInfoData();
 
             // Assert
-            Assert.That(result, Is.InstanceOf<OkObjectResult>());
-            var okResult = result as OkObjectResult;
-            Assert.That(okResult.Value, Is.EqualTo(infoModel));
+            result.Should().BeOfType<OkObjectResult>()
+                .Which.Value.Should().Be(infoModel);
+
         }
 
         /// <summary>
@@ -72,10 +76,10 @@ namespace NUnit_Tests.UnitTests
             // Act
             var result = await _controller.GetInfoData();
 
-            // Assert
-            Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
-            var notFoundResult = result as NotFoundObjectResult;
-            Assert.That(notFoundResult.Value, Is.EqualTo("Information data not available"));
+            // Assert         
+            result.Should().BeOfType<NotFoundObjectResult>()
+                .Which.Value.Should().Be("Information data not available");
+
         }
 
         /// <summary>
@@ -92,10 +96,13 @@ namespace NUnit_Tests.UnitTests
             var result = await _controller.GetInfoData();
 
             // Assert
-            Assert.That(result, Is.InstanceOf<ObjectResult>());
-            var objectResult = result as ObjectResult;
-            Assert.That(objectResult.StatusCode, Is.EqualTo(500));
-            Assert.That(objectResult.Value, Is.EqualTo("An error occurred while retrieving information"));
+            result.Should().BeOfType<ObjectResult>()
+                .Which.StatusCode.Should().Be(500);
+
+            result.Should().BeOfType<ObjectResult>()
+                .Which.Value.Should().Be("An error occurred while retrieving information");
+
+
             _loggerMock.Verify(
                 x => x.Log(
                     LogLevel.Error,
@@ -131,9 +138,9 @@ namespace NUnit_Tests.UnitTests
             var result = await _controller.GetAccordionData();
 
             // Assert
-            Assert.That(result, Is.InstanceOf<OkObjectResult>());
-            var okResult = result as OkObjectResult;
-            Assert.That(okResult.Value, Is.EqualTo(accordionModel));
+            result.Should().BeOfType<OkObjectResult>()
+                .Which.Value.Should().Be(accordionModel);
+
         }
 
         /// <summary>
@@ -155,9 +162,9 @@ namespace NUnit_Tests.UnitTests
             var result = await _controller.GetAccordionData();
 
             // Assert
-            Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
-            var notFoundResult = result as NotFoundObjectResult;
-            Assert.That(notFoundResult.Value, Is.EqualTo("Accordion data not available"));
+            result.Should().BeOfType<NotFoundObjectResult>()
+                .Which.Value.Should().Be("Accordion data not available");
+
         }
 
         /// <summary>
@@ -174,10 +181,12 @@ namespace NUnit_Tests.UnitTests
             var result = await _controller.GetAccordionData();
 
             // Assert
-            Assert.That(result, Is.InstanceOf<ObjectResult>());
-            var objectResult = result as ObjectResult;
-            Assert.That(objectResult.StatusCode, Is.EqualTo(500));
-            Assert.That(objectResult.Value, Is.EqualTo("An error occurred while retrieving accordion data"));
+            result.Should().BeOfType<ObjectResult>()
+                .Which.StatusCode.Should().Be(500);
+
+            result.Should().BeOfType<ObjectResult>()
+                .Which.Value.Should().Be("An error occurred while retrieving accordion data");
+
             _loggerMock.Verify(
                 x => x.Log(
                     LogLevel.Error,

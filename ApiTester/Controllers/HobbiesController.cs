@@ -42,10 +42,11 @@ namespace Presentation.Controllers
                 // Check if the response is empty and return appropriate status
                 if (hobbiesDto?.IsEmpty() ?? true)
                 {
-                    _logger.LogInformation("No hobbies data found");
+                    _logger.LogWarning("No hobbies data found");
                     return NotFound("Hobbies data not found."); // HTTP 404 Not Found
                 }
 
+                _logger.LogInformation($"Hobbies data retrieved: {System.Text.Json.JsonSerializer.Serialize(hobbiesDto)}");
                 return Ok(hobbiesDto); // HTTP 200 OK with data
             }
             catch (Exception ex)

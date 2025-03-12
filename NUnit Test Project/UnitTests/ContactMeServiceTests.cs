@@ -35,7 +35,7 @@ namespace NUnit_Tests.UnitTests
         [Test]
         public async Task CreateContactAsync_ValidInput_ReturnsTrue()
         {
-            // ARRANGE - This is where we set up everything our test needs
+            // ARRANGE
             // Setting up test data and mocks before executing the test
             // Creating a sample DTO with valid input data
             var contactDto = new ContactMeModel
@@ -55,21 +55,15 @@ namespace NUnit_Tests.UnitTests
                 Id = 0
             };
 
-            // Moq is a library that lets us create fake versions of things (mocks)
             // Here, we're telling our mock repository: "When AddContactAsync is called, just finish without errors"
             _contactMeRepositoryMock.Setup(r => r.AddContactAsync(It.IsAny<ContactMeEntity>()))
                 .Returns(Task.CompletedTask); // Task.CompletedTask means "done successfully"
 
-            // ACT - This is where we run the actual code we’re testing
-            // Printing the input so we can see what’s being tested if something fails
-            Console.WriteLine($"Test Input - Name: '{contactDto.Name}', Email: '{contactDto.Email}', Message: '{contactDto.Message}'");
-
+            // ACT
             // Calling the method we want to test and storing its result
             var result = await _service.CreateContactAsync(contactDto);
 
-            // ASSERT - Now we check if everything worked as expected
-            // FluentAssertions (aka AwesomeAssertions) gives us nicer ways to check results
-            // "Should().BeTrue()" checks if result is true, and shows a custom message if it fails
+            // ASSERT
             result.Should().BeTrue(
                 $"Failed with input: Name='{contactDto.Name}', Email='{contactDto.Email}', Message='{contactDto.Message}'");
 
@@ -86,7 +80,7 @@ namespace NUnit_Tests.UnitTests
                 .Arguments[0] // First argument from the call
                 .As<ContactMeEntity>(); // Converting it to our entity type
 
-            // FluentAssertions again: checking if the object we sent matches what we expected
+            // FluentAssertions: checking if the object we sent matches what we expected
             // "BeEquivalentTo" compares all properties to make sure they’re the same
             capturedEntity.Should().BeEquivalentTo(expectedEntity);
         }
@@ -112,13 +106,14 @@ namespace NUnit_Tests.UnitTests
             var result = await _service.CreateContactAsync(contactDto);
 
             // Assert
-            Assert.That(result, Is.False, $"Failed with input: Name='{contactDto.Name}', Email='{contactDto.Email}', Message='{contactDto.Message}'");
+            result.Should().BeFalse();
             _loggerMock.Verify(x => x.Log(
                 LogLevel.Error,
                 It.IsAny<EventId>(),
                 It.IsAny<It.IsAnyType>(),
                 It.Is<Exception>(ex => ex.Message == "DB error"),
-                It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Once());
+                It.IsAny<Func<It.IsAnyType, Exception, string>>()
+            ), Times.Once());
         }
 
         /// <summary>
@@ -126,7 +121,7 @@ namespace NUnit_Tests.UnitTests
         /// Ensures the service throws ContactValidationException and logs a warning when the name contains invalid characters.
         /// </summary>
         [Test]
-        public void CreateContactAsync_InvalidName_ThrowsValidationException()
+        public async Task CreateContactAsync_InvalidName_ThrowsValidationException()
         {
             // Arrange
             var contactDto = new ContactMeModel
@@ -136,9 +131,12 @@ namespace NUnit_Tests.UnitTests
                 Message = "Hello!"
             };
 
+            
             // Act & Assert
-            var exception = Assert.ThrowsAsync<ContactValidationException>(async () => await _service.CreateContactAsync(contactDto));
-            Assert.That(exception.Message, Is.EqualTo("Name must contain only alphabetic characters and spaces."));
+            await FluentActions.Invoking(async () => await _service.CreateContactAsync(contactDto))
+                .Should().ThrowAsync<ContactValidationException>()
+                .WithMessage("Name must contain only alphabetic characters and spaces.");
+
             _loggerMock.Verify(x => x.Log(LogLevel.Warning, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Once());
             _contactMeRepositoryMock.Verify(r => r.AddContactAsync(It.IsAny<ContactMeEntity>()), Times.Never());
         }
@@ -148,7 +146,7 @@ namespace NUnit_Tests.UnitTests
         /// Ensures the service throws ContactValidationException and logs a warning when the email format is invalid.
         /// </summary>
         [Test]
-        public void CreateContactAsync_InvalidEmail_ThrowsValidationException()
+        public async Task CreateContactAsync_InvalidEmail_ThrowsValidationException()
         {
             // Arrange
             var contactDto = new ContactMeModel
@@ -159,8 +157,10 @@ namespace NUnit_Tests.UnitTests
             };
 
             // Act & Assert
-            var exception = Assert.ThrowsAsync<ContactValidationException>(async () => await _service.CreateContactAsync(contactDto));
-            Assert.That(exception.Message, Is.EqualTo("A valid email address is required."));
+            var exception = await FluentActions.Invoking(async () => await _service.CreateContactAsync(contactDto))
+                .Should().ThrowAsync<ContactValidationException>()
+                .WithMessage("A valid email address is required.");
+
             _loggerMock.Verify(x => x.Log(LogLevel.Warning, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Once());
             _contactMeRepositoryMock.Verify(r => r.AddContactAsync(It.IsAny<ContactMeEntity>()), Times.Never());
         }
@@ -170,7 +170,7 @@ namespace NUnit_Tests.UnitTests
         /// Ensures the service throws ContactValidationException and logs a warning when the message contains invalid characters.
         /// </summary>
         [Test]
-        public void CreateContactAsync_InvalidMessage_ThrowsValidationException()
+        public async Task CreateContactAsync_InvalidMessage_ThrowsValidationException()
         {
             // Arrange
             var contactDto = new ContactMeModel
@@ -181,8 +181,10 @@ namespace NUnit_Tests.UnitTests
             };
 
             // Act & Assert
-            var exception = Assert.ThrowsAsync<ContactValidationException>(async () => await _service.CreateContactAsync(contactDto));
-            Assert.That(exception.Message, Is.EqualTo("Message contains invalid characters."));
+            await FluentActions.Invoking(async () => await _service.CreateContactAsync(contactDto))
+                .Should().ThrowAsync<ContactValidationException>()
+                .WithMessage("Message contains invalid characters.");
+
             _loggerMock.Verify(x => x.Log(LogLevel.Warning, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Once());
             _contactMeRepositoryMock.Verify(r => r.AddContactAsync(It.IsAny<ContactMeEntity>()), Times.Never());
         }
@@ -192,14 +194,16 @@ namespace NUnit_Tests.UnitTests
         /// Ensures the service throws ContactValidationException for empty Name, Email, and Message.
         /// </summary>
         [Test]
-        public void CreateContactAsync_EmptyDefaults_ThrowsValidationException()
+        public async Task CreateContactAsync_EmptyDefaults_ThrowsValidationException()
         {
             // Arrange
             var contactDto = new ContactMeModel();
 
             // Act & Assert
-            var exception = Assert.ThrowsAsync<ContactValidationException>(async () => await _service.CreateContactAsync(contactDto));
-            Assert.That(exception.Message, Is.EqualTo("Name must contain only alphabetic characters and spaces. A valid email address is required. Message contains invalid characters."));
+            await FluentActions.Invoking(async () => await _service.CreateContactAsync(contactDto))
+                .Should().ThrowAsync<ContactValidationException>()
+                .WithMessage("Name must contain only alphabetic characters and spaces. A valid email address is required. Message contains invalid characters.");
+
             _loggerMock.Verify(x => x.Log(LogLevel.Warning, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Once());
             _contactMeRepositoryMock.Verify(r => r.AddContactAsync(It.IsAny<ContactMeEntity>()), Times.Never());
         }
@@ -209,7 +213,7 @@ namespace NUnit_Tests.UnitTests
         /// Verifies that the service throws ContactValidationException when inputs are trimmed to empty strings.
         /// </summary>
         [Test]
-        public void CreateContactAsync_WhitespaceOnlyInputs_ThrowsValidationException()
+        public async Task CreateContactAsync_WhitespaceOnlyInputs_ThrowsValidationException()
         {
             // Arrange
             var contactDto = new ContactMeModel
@@ -220,8 +224,10 @@ namespace NUnit_Tests.UnitTests
             };
 
             // Act & Assert
-            var exception = Assert.ThrowsAsync<ContactValidationException>(async () => await _service.CreateContactAsync(contactDto));
-            Assert.That(exception.Message, Is.EqualTo("Name must contain only alphabetic characters and spaces. A valid email address is required. Message contains invalid characters."));
+            await FluentActions.Invoking(async () => await _service.CreateContactAsync(contactDto))
+                .Should().ThrowAsync<ContactValidationException>()
+                .WithMessage("Name must contain only alphabetic characters and spaces. A valid email address is required. Message contains invalid characters.");
+
             _loggerMock.Verify(x => x.Log(LogLevel.Warning, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Once());
             _contactMeRepositoryMock.Verify(r => r.AddContactAsync(It.IsAny<ContactMeEntity>()), Times.Never());
         }
@@ -231,7 +237,7 @@ namespace NUnit_Tests.UnitTests
         /// Ensures the service throws ContactValidationException and logs a warning when the message is null.
         /// </summary>
         [Test]
-        public void CreateContactAsync_NullMessage_ThrowsValidationException()
+        public async Task CreateContactAsync_NullMessage_ThrowsValidationException()
         {
             // Arrange
             var contactDto = new ContactMeModel
@@ -242,8 +248,10 @@ namespace NUnit_Tests.UnitTests
             };
 
             // Act & Assert
-            var exception = Assert.ThrowsAsync<ContactValidationException>(async () => await _service.CreateContactAsync(contactDto));
-            Assert.That(exception.Message, Is.EqualTo("Message contains invalid characters."));
+            await FluentActions.Invoking(async () => await _service.CreateContactAsync(contactDto))
+                .Should().ThrowAsync<ContactValidationException>()
+                .WithMessage("Message contains invalid characters.");
+
             _loggerMock.Verify(x => x.Log(LogLevel.Warning, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception, string>>()), Times.Once());
             _contactMeRepositoryMock.Verify(r => r.AddContactAsync(It.IsAny<ContactMeEntity>()), Times.Never());
         }
